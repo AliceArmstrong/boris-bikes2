@@ -1,9 +1,10 @@
 
 class DockingStation
-  attr_reader :status
+  attr_reader :dock_status, :bikes
 
-  def initialize(*status)
-    @status = status
+  def initialize
+    # @docked_bikes = 0
+    @bikes = []
   end
 
   # def status=(new_status)
@@ -13,16 +14,35 @@ class DockingStation
   #   @status
   # end
 
+  # def dock_status
+  #   "The docking station is #{@docked_bikes}"
+  # end
+
   def release_bike
-     Bike.new
-     @status = "empty"
-     "The docking station is #{@status}"
+    if @bikes.empty?
+      raise "The docking station is empty."
+    else
+    #  @docked_bikes = false
+      @bikes = @bikes.drop(1)
+    end
   end
 
-  def dock_bike
-     Bike.new
-     @status = "full"
-     "The docking station is #{@status}"
+  def dock_bike(bike)
+    if full? == true
+      raise "The docking station is full."
+    else
+    #  @docked_bikes = true
+      @bikes << bike
+    end
+  end
+
+  private
+  def full?
+    if @bikes.size >= 20
+      return true
+    else
+      false
+    end
   end
 end
 
